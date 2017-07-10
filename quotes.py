@@ -4,8 +4,12 @@ import scrapy
 
 class QuotesSpider(scrapy.Spider):
     name = 'quotes'
-    allowed_domains = ['http://jconline.ne10.uol.com.br/canal/cidades/policia/']
-    start_urls = ['http://http://jconline.ne10.uol.com.br/canal/cidades/policia//']
+    allowed_domains = ['jconline.ne10.uol.com.br/canal/cidades/policia/']
+    start_urls = ['http://jconline.ne10.uol.com.br/canal/cidades/policia/']
 
     def parse(self, response):
-        pass
+        for quote in response.css('ul.box-lista-noticias'):
+            yield {
+                # 'titulo' : response.css('h1.bloco_titulo.esq::text').extract_first(),
+                'noticia' : response.css('a::text').extract()
+            }
