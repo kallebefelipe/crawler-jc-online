@@ -24,7 +24,7 @@ class QuotesSpider(scrapy.Spider):
     def detalhes_noticia(self, response):
         yield {
             'titulo': response.css('h1.titulo-materia::text').extract_first(),
-            # 'bairro': response.css('div.mg_chapeu::text').extract_first(),
-            # 'texto': response.css('div.noticia_corponoticia > p::text').extract_first(),
-            # 'tag': response.css('div.mg_chapeu::text').extract_first(),
+            'sub-titulo' : response.css('p.mg_sutia::text').extract_first(),
+            'texto' : response.css('div.t13 manipularFonte.t13.manipularFonte > p::text').extract(),
+            'tag': response.css('li.keywords > a::text').extract(),
         }
