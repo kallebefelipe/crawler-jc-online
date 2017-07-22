@@ -52,7 +52,8 @@ class QuotesSpider(scrapy.Spider):
         noticia ={
             'titulo': response.css('h1.titulo-materia::text').extract_first().lower(),
             'sub-titulo': response.css('p.mg_sutia::text').extract_first().lower(),
-            'texto': response.css('div.t13.manipularFonte > p::text').extract(),
+            # 'texto': response.css('div.t13.manipularFonte > p::text').extract(),
+            'texto': response.css('p::text').extract(),
             'tag': response.css('li.keywords > a::text').extract(),
             'data': response.css('p.data-materia::text').extract_first(),
         }
@@ -82,6 +83,8 @@ class QuotesSpider(scrapy.Spider):
         noticia['data'] = normalize_string(self.tratar_data(noticia['data']))
         noticia['titulo'] = normalize_string(noticia['titulo'])
         noticia['sub-titulo'] = normalize_string(noticia['sub-titulo'])
+        if noticia['texto'] == '':
+            import ipdb; ipdb.set_trace()
         dados.append(noticia)
 
     def escrever_dados(self):
